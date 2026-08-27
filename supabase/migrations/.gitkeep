@@ -1,0 +1,3 @@
+-- Placeholder for Supabase SQL Migrations
+-- Migrations will define tables for merchant accounts, payment failure events,
+-- recovery actions, audit logs, and policy stats.
