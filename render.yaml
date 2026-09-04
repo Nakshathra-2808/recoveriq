@@ -1,0 +1,51 @@
+# ==============================================================================
+# Render Blueprint Specification for RecoverIQ Backend
+# Free-tier compatible FastAPI deployment
+# ==============================================================================
+
+services:
+  - type: web
+    name: recoveriq-backend
+    runtime: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PROJECT_NAME
+        value: RecoverIQ Backend
+      - key: API_V1_STR
+        value: /api/v1
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: RAZORPAY_ENVIRONMENT
+        value: test
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_BASE_URL
+        value: https://api.razorpay.com/v1
+      - key: RAZORPAY_TIMEOUT_SECONDS
+        value: "5.0"
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: gemini-1.5-flash
+      - key: LLM_TIMEOUT_SECONDS
+        value: "5.0"

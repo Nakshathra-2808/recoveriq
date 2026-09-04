@@ -30,10 +30,21 @@ class Settings(BaseSettings):
     SUPABASE_ANON_KEY: str = ""
     SUPABASE_SERVICE_ROLE_KEY: str = ""
     SUPABASE_JWT_SECRET: str = ""
+    SUPABASE_JWKS_URL: str = ""
 
-    # Razorpay (Placeholders for upcoming integration)
+    # Razorpay Test Configuration (Stage 5)
     RAZORPAY_KEY_ID: str = ""
     RAZORPAY_KEY_SECRET: str = ""
+    RAZORPAY_ENVIRONMENT: str = "test"  # Strictly "test" or "sandbox"
+    RAZORPAY_BASE_URL: str = "https://api.razorpay.com/v1"
+    RAZORPAY_TIMEOUT_SECONDS: float = 5.0
+
+    # LLM AI Diagnosis Configuration
+    LLM_PROVIDER: str = "gemini"  # "gemini", "openai", "groq", "mock"
+    LLM_API_KEY: str = ""
+    LLM_MODEL: str = "gemini-1.5-flash"
+    LLM_API_BASE_URL: str = ""
+    LLM_TIMEOUT_SECONDS: float = 5.0
 
     model_config = SettingsConfigDict(
         env_file=".env",

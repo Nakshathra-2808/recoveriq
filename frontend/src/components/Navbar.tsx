@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShieldCheck, LogIn, LayoutDashboard } from 'lucide-react';
+import { ShieldCheck, LogIn, LayoutDashboard, LogOut, User } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 
 export const Navbar: React.FC = () => {
-  const { isAuthenticated, signOut } = useAuth();
+  const { isAuthenticated, user, profile, signOut } = useAuth();
   const location = useLocation();
 
   return (
@@ -24,7 +24,7 @@ export const Navbar: React.FC = () => {
           </div>
         </Link>
 
-        <nav className="flex items-center space-x-4">
+        <nav className="flex items-center space-x-3">
           <Link
             to="/dashboard"
             className={`flex items-center space-x-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors ${
@@ -40,16 +40,30 @@ export const Navbar: React.FC = () => {
           <div className="h-4 w-px bg-slate-800" />
 
           {isAuthenticated ? (
-            <button
-              onClick={() => signOut()}
-              className="text-sm font-medium text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors"
-            >
-              Sign Out
-            </button>
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-800/60 border border-slate-700/60 text-xs">
+                <User className="w-3.5 h-3.5 text-indigo-400" />
+                <span className="text-slate-200 font-medium">{profile?.email || user?.email}</span>
+                {profile?.role && (
+                  <span className="px-1.5 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 uppercase text-[10px] font-bold">
+                    {profile.role}
+                  </span>
+                )}
+              </div>
+
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors cursor-pointer"
+                title="Sign out of current session"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
           ) : (
             <Link
               to="/login"
-              className="flex items-center space-x-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-1.5 rounded-md shadow-sm transition-colors"
+              className="flex items-center space-x-1.5 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-1.5 rounded-md shadow-sm transition-colors cursor-pointer"
             >
               <LogIn className="w-4 h-4" />
               <span>Merchant Sign In</span>
